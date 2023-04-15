@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUEGO</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .jugador-box {
+            background-color: white;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+
+<body style="background-color: #f9f9f9; position: relative; min-height: 100vh;">
+    
+    <img src="img.png" class="position-fixed left-0" style="bottom: 50px;" alt="Imagen" width="400" height="400">
+
+    <div id="app" class="container mt-5" >
+        
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 text-center">
+                <h1 class="text-center">🎮JuegowO | Números aleatorios🎮</h1>
+            </div>  
+        </div>
+        
+        <div class="row justify-content-center mb-5">
+            <div class="col-2 border text-center p-3 jugador-box">
+                <h2 class="mb-3">Jugador 1</h2>
+                <p><h2>🎅</h2></p>
+                <h3 class="font-weight-bold">{{jugador1}}</h3>
+            </div>
+            <div class="col-2 border text-center p-3 ml-3 jugador-box">
+                <h2 class="mb-3">Jugador 2</h2>
+                <p><h2>🧚‍♀️</h2></p>
+                <h3 class="font-weight-bold">{{jugador2}}</h3>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-5">
+            <div class="col-12 text-center">
+                <h1>🥳 GANADOR-> {{ganador}}</h1>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                <h4 v-if="(oportunidades==3)" class="text-danger"> ~.~Ya realizaste 3 intentos~.~ </h4>
+                <h4 v-else> Oportunidades restantes: 
+                    <span class="font-weight-bold text-purple">{{ 3 - oportunidades}}</span>
+                </h4>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 text-center">
+                <button type="button" v-on:click="jugar()" :disabled="oportunidades>2" class="btn btn-primary">🌺JUGAR</button>
+                <button v-if="(oportunidades==3)" type="button" v-on:click="limpiar()" class="btn btn-danger ml-3">REINICIAR🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@2/dist/umd/popper.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        
+        var app = new Vue({
+            el: '#app',
+            data: {
+                jugador1: 0,
+                jugador2: 0,
+                ganador: "❓",
+                oportunidades: 0        
+            },
+            methods: {
+                jugar: function(event){
+                    // Números aleatorios
+                    this.jugador1= Math.round(Math.random()*10);
+                    this.jugador2= Math.round(Math.random()*10);
+
+                    if(this.jugador1 == this.jugador2){
+                        mensaje= "🎅 = 🧚‍♀️";
+                    }else if(this.jugador1 > this.jugador2){
+                        mensaje= "🎅";
+                    }else{
+                        mensaje= "🧚‍♀️";
+                    }
+
+                    this.ganador = mensaje;
+                    this.oportunidades++;
+                },
+                limpiar: function(event){
+                    this.jugador1=0;
+                    this.jugador2=0;
+                    this.oportunidades=0;
+                    this.ganador="❓";
+                }
+            },
+        });
+    </script>
+</body>
+</html>
+
+
